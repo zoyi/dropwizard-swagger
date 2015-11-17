@@ -2,13 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.smoketurner</groupId>
+    <groupId>com.zoyi.channel</groupId>
     <artifactId>dropwizard-swagger</artifactId>
     <version>0.9.1-2-SNAPSHOT</version>
 
     <name>Dropwizard Swagger support</name>
     <description>A simple way to document your REST APIs in DropWizard using Swagger</description>
-    <url>https://github.com/smoketurner/dropwizard-swagger/</url>
+    <url>https://github.com/zoyi/dropwizard-swagger/</url>
     <inceptionYear>2014</inceptionYear>
 
     <licenses>
@@ -26,7 +26,7 @@
         <developer>
             <id>jplock</id>
             <name>Justin Plock</name>
-            <email>jplock@smoketurner.com</email>
+            <email>jplock@zoyi.com</email>
             <timezone>America/New_York</timezone>
         </developer>
     </developers>
@@ -36,22 +36,32 @@
             <id>dropwizard-swagger</id>
             <url>${project.version}</url>
         </site>
-        <snapshotRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Sonatype Nexus Snapshots</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
         <repository>
-            <id>sonatype-nexus-staging</id>
-            <name>Nexus Release Repository</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>maven-s3-release-repo</id>
+            <name>AWS Release Repository</name>
+            <url>s3://maven.zoyi.co/releases</url>
         </repository>
+        <snapshotRepository>
+            <id>maven-s3-snapshot-repo</id>
+            <name>AWS Snapshot Repository</name>
+            <url>s3://maven.zoyi.co/snapshots</url>
+        </snapshotRepository>
+        <!--<snapshotRepository>-->
+            <!--<id>sonatype-nexus-snapshots</id>-->
+            <!--<name>Sonatype Nexus Snapshots</name>-->
+            <!--<url>https://oss.sonatype.org/content/repositories/snapshots</url>-->
+        <!--</snapshotRepository>-->
+        <!--<repository>-->
+            <!--<id>sonatype-nexus-staging</id>-->
+            <!--<name>Nexus Release Repository</name>-->
+            <!--<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
+        <!--</repository>-->
     </distributionManagement>
 
     <scm>
-        <connection>scm:git:git://github.com:smoketurner/dropwizard-swagger.git</connection>
-        <developerConnection>scm:git:git@github.com:smoketurner/dropwizard-swagger.git</developerConnection>
-        <url>http://github.com/smoketurner/dropwizard-swagger</url>
+        <connection>scm:git:git://github.com:zoyi/dropwizard-swagger.git</connection>
+        <developerConnection>scm:git:git@github.com:zoyi/dropwizard-swagger.git</developerConnection>
+        <url>http://github.com/zoyi/dropwizard-swagger</url>
         <tag>HEAD</tag>
     </scm>
 
@@ -66,12 +76,12 @@
 
     <ciManagement>
         <system>Travis CI</system>
-        <url>https://travis-ci.org/smoketurner/dropwizard-swagger</url>
+        <url>https://travis-ci.org/zoyi/dropwizard-swagger</url>
     </ciManagement>
 
     <issueManagement>
         <system>github</system>
-        <url>https://github.com/smoketurner/dropwizard-swagger/issues</url>
+        <url>https://github.com/zoyi/dropwizard-swagger/issues</url>
     </issueManagement>
 
     <dependencyManagement>
@@ -317,6 +327,13 @@
     </dependencies>
 
     <build>
+        <extensions>
+            <extension>
+                <groupId>org.kuali.maven.wagons</groupId>
+                <artifactId>maven-s3-wagon</artifactId>
+                <version>1.2.1</version>
+            </extension>
+        </extensions>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
