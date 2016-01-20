@@ -31,33 +31,6 @@
         </developer>
     </developers>
 
-    <distributionManagement>
-        <site>
-            <id>dropwizard-swagger</id>
-            <url>${project.version}</url>
-        </site>
-        <repository>
-            <id>maven-s3-release-repo</id>
-            <name>AWS Release Repository</name>
-            <url>s3://maven.zoyi.co/releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>maven-s3-snapshot-repo</id>
-            <name>AWS Snapshot Repository</name>
-            <url>s3://maven.zoyi.co/snapshots</url>
-        </snapshotRepository>
-        <!--<snapshotRepository>-->
-            <!--<id>sonatype-nexus-snapshots</id>-->
-            <!--<name>Sonatype Nexus Snapshots</name>-->
-            <!--<url>https://oss.sonatype.org/content/repositories/snapshots</url>-->
-        <!--</snapshotRepository>-->
-        <!--<repository>-->
-            <!--<id>sonatype-nexus-staging</id>-->
-            <!--<name>Nexus Release Repository</name>-->
-            <!--<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
-        <!--</repository>-->
-    </distributionManagement>
-
     <scm>
         <connection>scm:git:git://github.com:zoyi/dropwizard-swagger.git</connection>
         <developerConnection>scm:git:git@github.com:zoyi/dropwizard-swagger.git</developerConnection>
