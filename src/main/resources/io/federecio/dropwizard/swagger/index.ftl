@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="" type="com.federecio.dropwizard.swagger.SwaggerView" -->
+<#-- @ftlvariable name="" type="io.federecio.dropwizard.swagger.SwaggerView" -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,11 +37,11 @@
       }
       window.swaggerUi = new SwaggerUi({
         url: "${contextPath}/swagger.json",
-        <#if validatorUrl??>
+      <#if validatorUrl??>
         validatorUrl: "${validatorUrl}",
-        <#else>
+      <#else>
         validatorUrl: null,
-        </#if>
+      </#if>
         dom_id: "swagger-ui-container",
         supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
         onComplete: function(swaggerApi, swaggerUi){
@@ -57,11 +57,9 @@
             });
             */
           }
-
           if(window.SwaggerTranslator) {
             window.SwaggerTranslator.translate();
           }
-
           $('pre code').each(function(i, e) {
             hljs.highlightBlock(e)
           });
@@ -75,16 +73,7 @@
         defaultModelRendering: 'schema',
         showRequestHeaders: false
       });
-
-      <#if showAuth>
-        function addApiKeyAuthorization() {
-          var key = encodeURIComponent($('#input_apiKey')[0].value);
-          if(key && key.trim() != "") {
-              var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("api_key", key, "query");
-              window.swaggerUi.api.clientAuthorizations.add("api_key", apiKeyAuth);
-              log("added key " + key);
-          }
-        }
+    <#if showAuth>
 
       function addManagerAuthorization() {
         var key = $('#input_ManagerId')[0].value;
@@ -116,42 +105,38 @@
         }
       }
 
+      function addApiKeyAuthorization() {
+        var key = encodeURIComponent($('#input_apiKey')[0].value);
+        if(key && key.trim() != "") {
+          var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("api_key", key, "query");
+          window.swaggerUi.api.clientAuthorizations.add("api_key", apiKeyAuth);
+          log("added key " + key);
+        }
+      }
       function addAuthorizationHeader() {
-          var key = $('#input_authHeader')[0].value;
-          if(key && key.trim() != "") {
-              swaggerUi.api.clientAuthorizations.add("Custom Authorization", new SwaggerClient.ApiKeyAuthorization("Authorization", key, "header"));
-          }
+        var key = $('#input_authHeader')[0].value;
+        if(key && key.trim() != "") {
+          var headerAuth = new SwaggerClient.ApiKeyAuthorization("Authorization", key, "header");
+          window.swaggerUi.api.clientAuthorizations.add("Custom Authorization", headerAuth);
+          log("added key " + key);
+        }
       }
 
-      $('#input_apiKey').change(function() {
-          addApiKeyAuthorization();
-      });
+      $('#input_ManagerId').change(addManagerAuthorization);
+      $('#input_ManagerToken').change(addManagerAuthorization);
+      $('#input_UserId').change(addUserAuthorization);
+      $('#input_UserToken').change(addUserAuthorization);
 
-      $('#input_ManagerId').change(function() {
-          addManagerAuthorization();
-      });
-      $('#input_ManagerToken').change(function() {
-          addManagerAuthorization();
-      });
-      $('#input_UserId').change(function() {
-          addUserAuthorization();
-      });
-      $('#input_UserToken').change(function() {
-          addUserAuthorization();
-      });
-
-      $('#input_authHeader').change(function() {
-          addAuthorizationHeader();
-      });
-
+      $('#input_apiKey').change(addApiKeyAuthorization);
+      $('#input_authHeader').change(addAuthorizationHeader);
       $('#input_headerSelect').change(function() {
-          var toShow = $( this ).val();
-          for (var i = 0; i < 4; ++i) {
-            if (i != Number(toShow)) {
-              $('#header_'+i).hide();
-            }
+        var toShow = $( this ).val();
+        for (var i = 0; i < 4; ++i) {
+          if (i != Number(toShow)) {
+            $('#header_'+i).hide();
           }
-          $('#header_'+toShow).show();
+        }
+        $('#header_'+toShow).show();
       });
       // if you have an apiKey you would like to pre-populate on the page for demonstration purposes...
       /*
@@ -159,15 +144,27 @@
         $('#input_apiKey').val(apiKey);
         addApiKeyAuthorization();
       */
-
+    <#else>
+      $('#input_ManagerId').hide();
+      $('#input_ManagerToken').hide();
+      $('#input_UserId').hide();
+      $('#input_UserToken').hide();
+      //
+      $('#input_apiKey').hide();
+      $('#input_authHeader').hide();
+      $('#input_headerSelect').hide();
+    </#if>
+    <#if !showApiSelector>
+      $('#explore').hide();
+      $('#input_baseUrl').hide();
+    </#if>
       window.swaggerUi.load();
-
       function log() {
         if ('console' in window) {
           console.log.apply(console, arguments);
         }
       }
-  });
+    });
   </script>
 </head>
 
@@ -178,12 +175,12 @@
     <form id='api_selector'>
       <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="text"/></div>
       <div class='input'>
-          <select id="input_headerSelect">
-              <option value="0">User Auth</option>
-              <option value="1">Manager Auth</option>
-              <option value="2">api_key</option>
-              <option value="3">Auth Header</option>
-          </select>
+        <select id="input_headerSelect">
+          <option value="0">User Auth</option>
+          <option value="1">Manager Auth</option>
+          <option value="2">api_key</option>
+          <option value="3">Auth Header</option>
+        </select>
       </div>
       <div class='input' id="header_0">
         <input placeholder="ID" id="input_UserId" name="UserId" size="3" type="text"/>
