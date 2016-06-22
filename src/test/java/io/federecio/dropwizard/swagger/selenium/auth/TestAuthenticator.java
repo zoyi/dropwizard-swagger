@@ -1,6 +1,5 @@
+// Copyright (C) 2014 Federico Recio
 /**
- * Copyright (C) 2014 Federico Recio
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -20,11 +19,12 @@ import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.Authenticator;
 import io.dropwizard.auth.PrincipalImpl;
 
-public class TestAuthenticator implements Authenticator<String, PrincipalImpl>{
+public class TestAuthenticator implements Authenticator<String, PrincipalImpl> {
 
     @Override
-    public Optional<PrincipalImpl> authenticate(String token) throws AuthenticationException {
-        if ("secret" .equals(token)) {
+    public Optional<PrincipalImpl> authenticate(String token)
+            throws AuthenticationException {
+        if ("secret".equals(token)) {
             return Optional.of(new PrincipalImpl(token));
         }
         return Optional.absent();

@@ -1,6 +1,5 @@
+// Copyright (C) 2014 Federico Recio
 /**
- * Copyright (C) 2014 Federico Recio
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,22 +14,18 @@
  */
 package io.federecio.dropwizard.swagger.selenium.auth;
 
-import io.dropwizard.auth.Auth;
-import io.dropwizard.auth.PrincipalImpl;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import io.dropwizard.auth.Auth;
+import io.dropwizard.auth.PrincipalImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
-/**
- * @author Maximilien Marie
- */
 @Api("/auth")
 @Path("/auth.json")
 public class AuthResource {
@@ -39,16 +34,17 @@ public class AuthResource {
     @GET
     @ApiOperation(OPERATION_DESCRIPTION)
     @Produces(MediaType.TEXT_PLAIN)
-    public Response protectedDummyEndpoint(@ApiParam(hidden = true) @Auth PrincipalImpl user) {
-        return Response.ok().entity(user.getName()).build();
+    public Response protectedDummyEndpoint(
+            @ApiParam(hidden = true) @Auth PrincipalImpl user) {
+        return Response.ok(user.getName()).build();
     }
 
     @GET
     @Path("apiKey")
     @ApiOperation(OPERATION_DESCRIPTION)
     @Produces(MediaType.TEXT_PLAIN)
-    public Response apiKeyDummyEndpoint(@ApiParam(hidden = true) @QueryParam("api_key") String apiKey) {
-        return Response.ok().entity(apiKey).build();
+    public Response apiKeyDummyEndpoint(
+            @ApiParam(hidden = true) @QueryParam("api_key") String apiKey) {
+        return Response.ok(apiKey).build();
     }
-
 }

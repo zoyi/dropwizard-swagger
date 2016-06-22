@@ -1,6 +1,5 @@
+// Copyright (C) 2014 Federico Recio
 /**
- * Copyright (C) 2014 Federico Recio
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -20,20 +19,19 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-/**
- * @author Federico Recio
- */
-@Path(Constants.SWAGGER_PATH)
+@Path("/swagger")
 @Produces(MediaType.TEXT_HTML)
 public class SwaggerResource {
+    private final SwaggerViewConfiguration config;
     private final String urlPattern;
 
-    public SwaggerResource(String urlPattern) {
+    public SwaggerResource(String urlPattern, SwaggerViewConfiguration config) {
         this.urlPattern = urlPattern;
+        this.config = config;
     }
 
     @GET
     public SwaggerView get() {
-        return new SwaggerView(urlPattern);
+        return new SwaggerView(urlPattern, config);
     }
 }

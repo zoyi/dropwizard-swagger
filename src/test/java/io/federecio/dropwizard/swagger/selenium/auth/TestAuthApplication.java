@@ -1,6 +1,5 @@
+//  Copyright (C) 2014 Federico Recio
 /**
- * Copyright (C) 2014 Federico Recio
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -23,9 +22,6 @@ import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.TestApplication;
 import io.federecio.dropwizard.swagger.TestConfiguration;
 
-/**
- * @author Maximilien Marie
- */
 public class TestAuthApplication extends TestApplication {
 
     @Override
